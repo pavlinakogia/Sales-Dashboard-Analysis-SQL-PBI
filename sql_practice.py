@@ -8,11 +8,10 @@ df = pd.read_csv('sales_data_sample.csv', encoding='unicode_escape')
 conn = sqlite3.connect(':memory:')
 df.to_sql('SALES_DATA', conn, index=False, if_exists='replace')
 
-# 3. Η συνάρτηση για να τρέχουμε SQL queries εύκολα
+# 3. Η συνάρτηση για να τρέχουμε SQL queries
 def run_query(query):
     return pd.read_sql_query(query, conn)
 
-# --- ΕΔΩ ΓΡΑΦΕΙΣ ΤΟ SQL QUERY ΣΟΥ ---
 query = """
 SELECT COUNTRY, SUM(SALES) as TOTAL_SALES
 FROM SALES_DATA
@@ -36,6 +35,6 @@ GROUP BY COUNTRY
 HAVING TOTAL_SALES > 1000000
 ORDER BY TOTAL_SALES DESC 
 """
-# Εκτέλεση και εμφάνιση αποτελεσμάτων
+
 result = run_query(query)
 print(result)
